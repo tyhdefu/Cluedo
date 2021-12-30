@@ -1,2 +1,2 @@
-#[rust]
-#debuginfo-level = 1
+[rust]
+debuginfo-level = 1

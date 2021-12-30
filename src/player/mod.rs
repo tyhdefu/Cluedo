@@ -1,10 +1,11 @@
-use crate::player_move::{Move, MoveResult};
-use crate::card::{CardSet, PWRCardSet, Card};
-use crate::notes::{Notes, PWRNotes};
-use crate::card::Card::{Person, Weapon, Room};
+pub mod player_move;
+
+use player_move::{Move, MoveResult};
+use crate::card::{CardSet, PWRCardSet, Card, PersonOptions, WeaponOptions, RoomOptions};
+use crate::notes::{Notes, CardTypeNoteTracker, pwr_notes::PWRNotes};
 use rand::rngs::{SmallRng, OsRng};
 use rand::SeedableRng;
-use crate::card_store::{CardStore, PWRCardStore};
+use crate::card::card_store::{CardStore, PWRCardStore};
 use std::marker::PhantomData;
 
 pub trait Player<T : CardSet> {
@@ -37,7 +38,12 @@ impl<CS : CardSet, C : CardStore<CS>, T : Notes> RegularPlayer<CS, C, T> {
     }
 }
 
-impl Player<PWRCardSet> for RegularPlayer<PWRCardSet, PWRCardStore, PWRNotes> {
+impl<PN, WN, RN> Player<PWRCardSet> for RegularPlayer<PWRCardSet, PWRCardStore, PWRNotes<PN, WN, RN>>
+    where 
+    PN: CardTypeNoteTracker<PersonOptions>, 
+    WN: CardTypeNoteTracker<WeaponOptions>,
+    RN: CardTypeNoteTracker<RoomOptions>,    
+    {
 
     fn give_card(&mut self, card: Card) {
         self.notes.mark_not(&card);

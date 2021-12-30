@@ -1,23 +1,22 @@
-use crate::card::PersonOptions::{Scarlet, Mustard, White, Green, Peacock, Plum};
-use crate::card::WeaponOptions::{Dagger, Wrench, Pistol, Rope, LeadPipe, Candlestick};
-use crate::card::RoomOptions::{Bedroom, Bathroom, Study, LivingRoom, DiningRoom, Kitchen, Courtyard, Garage, GamesRoom};
-use crate::game::{CluedoGame, Game, GameResult};
-use crate::deck::PWRDeckCreator;
-use crate::notes::PWRNotes;
-use crate::player::RegularPlayer;
+use card::PersonOptions::{Scarlet, Mustard, White, Green, Peacock, Plum};
+use card::WeaponOptions::{Dagger, Wrench, Pistol, Rope, LeadPipe, Candlestick};
+use card::RoomOptions::{Bedroom, Bathroom, Study, LivingRoom, DiningRoom, Kitchen, Courtyard, Garage, GamesRoom};
+use game::{CluedoGame, Game, GameResult};
+use deck::PWRDeckCreator;
+use crate::notes::pwr_notes::PWRNotes;
+use crate::notes::vec_card_type_notes::VecCardTypeNotes;
+use player::RegularPlayer;
 use std::time::Instant;
-use crate::card_store::PWRCardStore;
+use card::card_store::PWRCardStore;
 use rand::rngs::{SmallRng, OsRng};
 use rand::{SeedableRng, RngCore};
 use core::mem;
 
 mod card;
-mod game;
-mod player_move;
-mod player;
 mod notes;
+mod player;
 mod deck;
-mod card_store;
+mod game;
 
 fn main() {
 
@@ -33,9 +32,14 @@ fn main() {
         &rooms
     );
 
-    let player1 = RegularPlayer::new(PWRCardStore::new(), PWRNotes::new(&persons, &weapons, &rooms));
-    let player2 = RegularPlayer::new(PWRCardStore::new(), PWRNotes::new(&persons, &weapons, &rooms));
-    let player3 = RegularPlayer::new(PWRCardStore::new(), PWRNotes::new(&persons, &weapons, &rooms));
+    let notes = PWRNotes::new(
+        VecCardTypeNotes::new(&persons),
+        VecCardTypeNotes::new(&weapons),
+        VecCardTypeNotes::new(&rooms),
+    );
+    let player1 = RegularPlayer::new(PWRCardStore::new(), notes.clone());
+    let player2 = RegularPlayer::new(PWRCardStore::new(), notes.clone());
+    let player3 = RegularPlayer::new(PWRCardStore::new(), notes);
 
     let mut game = CluedoGame::new(
         deck_creator,

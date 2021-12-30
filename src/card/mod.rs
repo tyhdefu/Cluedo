@@ -1,4 +1,6 @@
-use crate::card::Card::{Person, Weapon, Room};
+pub mod card_store;
+
+use Card::{Person, Weapon, Room};
 use std::fmt::Debug;
 
 pub trait CardSet: PartialEq + IntoIterator<Item = Card> + Clone + Debug
@@ -65,7 +67,7 @@ pub struct PWRCardSet {
 }
 
 impl PWRCardSet {
-    pub fn new(person: PersonOptions, weapon: WeaponOptions, room: RoomOptions) -> PWRCardSet {
+    pub fn new(person: PersonOptions, weapon: WeaponOptions, room: RoomOptions) -> Self {
         PWRCardSet {
             person,
             weapon,

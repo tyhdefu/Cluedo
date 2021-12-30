@@ -1,5 +1,5 @@
 [package]
-name = "RustCluedo"
+name = "rust_cluedo"
 version = "0.1.0"
 authors = ["James <jameshendry05@gmail.com>"]
 edition = "2018"
@@ -9,5 +9,12 @@ edition = "2018"
 [dependencies]
 rand = {version = "0.8.0", features = ["small_rng"]}
 
-#[profile.release]
-#debug = 1
+[dev-dependencies]
+criterion = "0.3"
+
+[profile.release]
+debug = true
+
+[[bench]]
+name = "note_tracker_bench"
+harness = false

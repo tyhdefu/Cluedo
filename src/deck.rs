@@ -1,8 +1,8 @@
-use crate::card::{CardSet, PWRCardSet, Card, PersonOptions, WeaponOptions, RoomOptions};
+use super::card::{CardSet, PWRCardSet, Card, PersonOptions, WeaponOptions, RoomOptions};
 use rand::rngs::{OsRng, SmallRng};
 use rand::{RngCore, Rng};
 use rand::seq::SliceRandom;
-use crate::card::Card::{Person, Room, Weapon};
+use super::card::Card::{Person, Room, Weapon};
 
 // Deck Creator
 

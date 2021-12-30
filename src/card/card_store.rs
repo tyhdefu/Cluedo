@@ -1,5 +1,5 @@
-use crate::card::{CardSet, PersonOptions, WeaponOptions, RoomOptions, Card, PWRCardSet};
-use crate::card::Card::{Person, Weapon, Room};
+use super::{CardSet, PersonOptions, WeaponOptions, RoomOptions, Card, PWRCardSet};
+use super::Card::{Person, Weapon, Room};
 
 pub trait CardStore<CS : CardSet> {
     fn has(&self, card: &Card) -> bool;

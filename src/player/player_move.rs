@@ -1,4 +1,4 @@
-use crate::card::{PWRCardSet, Card, CardSet};
+use crate::card::{Card, CardSet};
 
 pub enum Move<CS : CardSet> {
     Ask(CS),

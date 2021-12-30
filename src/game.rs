@@ -1,8 +1,7 @@
-use crate::card::{CardSet, Card};
-use crate::player::Player;
-use crate::player_move::{Move, MoveResult};
-use std::collections::HashSet;
-use crate::deck::{DeckCreator, PreDeck};
+use super::card::{CardSet, Card};
+use super::player::Player;
+use crate::player::player_move::{Move, MoveResult};
+use super::deck::{DeckCreator, PreDeck};
 use std::marker::PhantomData;
 use rand::rngs::{SmallRng, OsRng};
 use rand::SeedableRng;
@@ -12,8 +11,6 @@ pub trait Game<T> {
 
     fn add_player(&mut self, player: Box<dyn Player<T>>);
 }
-
-pub struct Thing {}
 
 pub struct CluedoGame<CS : CardSet, PD : PreDeck<CS>, DC : DeckCreator<CS, PD>> {
     players: Vec<Box<dyn Player<CS>>>,
@@ -48,15 +45,12 @@ impl<CS : CardSet, PD: PreDeck<CS>, DC : DeckCreator<CS, PD>> Game<CS> for Clued
 
         let mut state = GameState {
             secret: pre_deck.take_secret_cards(&mut self.rng),
-//            player_cards: Vec::new()
         };
-        //for _ in 0..self.players.len() {
-        //    state.player_cards.push(HashSet::new())
-        //}
+
         let mut deck = pre_deck.next_step(&mut self.rng);
 
         // Deal.
-
+        
         while deck.len() >= self.players.len() {
             for i in 0..self.players.len() {
                 let card = deck.take().unwrap();
